@@ -1,5 +1,6 @@
 import {  Tabs } from "antd";
 import * as _ from "lodash";
+import React from 'react'
 
  const SectionTabs = ({ children }) => {
   console.log(children);
