@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import './styles.css';
-import { Requirements } from '../components/Requirements';
+import { Requirements} from '../components/Requirements';
 
 const stories = storiesOf('App Test', module);
 

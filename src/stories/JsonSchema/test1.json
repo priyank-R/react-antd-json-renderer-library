@@ -1,0 +1,24 @@
+{
+  "name": "Procurement 1",
+  "renderType": "stages",
+  "renderValue": {
+    "Main Stage 1": {
+      "renderType": "stages",
+      "renderValue": {
+        "Main Stage 1, Sub Stage 1": {
+          "renderType": "text"
+        },
+        "Main Stage 1, Sub Stage 2": {
+          "renderType": "conversations",
+          "renderValue": [{
+            "user": "ruparelp",
+            "content": "yi"
+          }]
+        }
+      }
+    },
+    "Main Stage 2": {
+      "renderType": "text"
+    }
+  }
+}
