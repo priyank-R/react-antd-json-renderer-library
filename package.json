@@ -1,6 +1,6 @@
 {
   "name": "react-antd-json-renderer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Json Renderer Library with Storybooks configured for easier development.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
