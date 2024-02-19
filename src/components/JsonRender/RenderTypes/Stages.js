@@ -1,6 +1,7 @@
 import { Collapse } from "antd";
 import * as _ from "lodash";
 import { yellow, green, red } from "@ant-design/colors";
+import React from 'react'
 
 const { Panel } = Collapse;
 

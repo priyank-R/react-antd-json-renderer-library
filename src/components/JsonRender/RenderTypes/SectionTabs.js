@@ -1,4 +1,4 @@
-import { Divider, Tabs } from "antd";
+import {  Tabs } from "antd";
 import * as _ from "lodash";
 
  const SectionTabs = ({ children }) => {

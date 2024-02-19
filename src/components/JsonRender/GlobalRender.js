@@ -2,6 +2,7 @@ import Conversations from "./RenderTypes/Conversations";
 import Stages from "./RenderTypes/Stages";
 import * as _ from "lodash";
 import SectionTabs from "./RenderTypes/SectionTabs";
+import React from 'react'
 
 export const GlobalRender = ({ data }) => {
   const walkPath = (path, additional_props = {}, pathTrace = "$") => {
