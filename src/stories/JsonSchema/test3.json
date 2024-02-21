@@ -1,0 +1,19 @@
+{
+  "name": "Proc 3",
+  "renderType": "stages",
+  "renderValue": {
+    "My Stage 1": {
+      "name": "custom stage name",
+      "renderType": "stages",
+      "renderValue": {
+        "Sub stage 1": {
+          "renderType": "text"
+        }
+      }
+    },
+    "My Stage 2": {
+      "renderType": "text",
+      "renderValue": "hi"
+    }
+  }
+}

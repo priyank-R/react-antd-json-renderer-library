@@ -5,15 +5,18 @@ import { Comment } from "@ant-design/compatible";
 
 const { TextArea } = Input;
 
-const Conversations = ({ children: comments }) => {
+const Conversations = ({ children: comments, ...props }) => {
   const [commentText, setCommentText] = useState("");
 
-  //   const handleSubmit = () => {
-  //     if (commentText.trim() !== "") {
-  //       setComments([...comments, { content: commentText, author: "User" }]);
-  //       setCommentText("");
-  //     }
-  //   };
+  const handleChange = (e) => {
+    if (e.target.value.trim() !== "") {
+      setCommentText(e.target.value);
+    }
+  };
+  const handleSubmit = (e) => {
+    comments = [...comments, { content: commentText, author: "User" }];
+    setCommentText("");
+  };
 
   return (
     <div>
@@ -27,20 +30,16 @@ const Conversations = ({ children: comments }) => {
             <Comment
               author={item.user}
               content={item.content}
-                // avatar={<Avatar>{item.author[0]}</Avatar>}
+              // avatar={<Avatar>{item.author[0]}</Avatar>}
             />
           </li>
         )}
       />
       <Form.Item>
-        <TextArea
-          rows={2}
-          onChange={(e) => setCommentText(e.target.value)}
-          value={commentText}
-        />
+        <TextArea rows={2} onChange={handleChange} value={commentText} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" onClick={() => {}} type="primary">
+        <Button htmlType="submit" onClick={handleSubmit} type="primary">
           Add Comment
         </Button>
       </Form.Item>
@@ -48,4 +47,4 @@ const Conversations = ({ children: comments }) => {
   );
 };
 
-export default Conversations
+export default Conversations;

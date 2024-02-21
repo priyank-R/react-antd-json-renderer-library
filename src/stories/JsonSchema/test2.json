@@ -37,6 +37,10 @@
                   "id": "4563211",
                   "name": "My File",
                   "link": "sharepoint/url/merck.com"
+                },
+                {
+                  "id": "949494",
+                  "link": "sharepoint/url/merck.com"
                 }
               ]
             }
