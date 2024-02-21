@@ -54,12 +54,12 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
     });
   };
 
-  const walkPath_2 = (path, previousPathTrace = "$", passOnProps = {}) => {
+  const walkPath_2 = (path, pathTrace = "$", passOnProps = {}) => {
     if (_.isArray(path)) {
       return path.map((item, index) => {
         return {
           ...item,
-          previousPathTrace: previousPathTrace + `[${index}]`,
+          pathTrace: pathTrace + `[${index}]`,
           ...passOnProps,
         };
       });
@@ -68,10 +68,10 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
       if (_.has(path, "renderType", false)) {
         return componentByType(
           _.get(path, "renderType", null),
-          walkPath_2(path["renderValue"], previousPathTrace + ".renderValue"),
+          walkPath_2(path["renderValue"], pathTrace + ".renderValue"),
           {
             ..._.omit(path, "renderValue"),
-            previousPathTrace,
+            pathTrace,
             pass: 1,
             ...passOnProps,
 
@@ -80,22 +80,22 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
       }
       return _.keys(path).map((key) => {
         if (_.has(path[key], "renderType")) {
-          return walkPath_2(path[key], previousPathTrace + `.${key}`, {
+          return walkPath_2(path[key], pathTrace + `.${key}`, {
             name: key,
             ..._.omit(path[key], "renderValue"),
             pass: 2
           });
         } else {
           if (_.isObject(path)) {
-            return componentByType(null, [], { name: key, ...path[key], previousPathTrace : previousPathTrace + `.${key}`, pass:3 });
+            return componentByType(null, [], { name: key, ...path[key], pathTrace : pathTrace + `.${key}`, pass:3 });
           } else {
-            return componentByType(null, [], { name: key, previousPathTrace: previousPathTrace + `.${key}`, pass:4 });
+            return componentByType(null, [], { name: key, pathTrace: pathTrace + `.${key}`, pass:4 });
           }
         }
       });
     }
 
-    return componentByType(null, [], { ...passOnProps, previousPathTrace });
+    return componentByType(null, [], { ...passOnProps, pathTrace });
   };
 
   const componentByType = (type, children = [], props = {}) => {
@@ -115,6 +115,5 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
     }
   };
 
-  console.log(walkPath_2(renderedData))
   return walkPath_2(renderedData);
 };
