@@ -6,7 +6,10 @@ import React from "react";
 import List from "./RenderTypes/List";
 import _Empty from "./RenderTypes/Empty";
 
-export const GlobalRender = ({ data, onDataChange = () => {} }) => {
+export const GlobalRender = ({
+  data,
+  onDataChange = (pathTrace, changedValue) => {},
+}) => {
   const [renderedData, setRenderedData] = React.useState(data);
   const walkPath = (path, additional_props = {}, pathTrace = "$") => {
     if (!path || _.isString(path)) {
@@ -61,6 +64,7 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
           ...item,
           pathTrace: pathTrace + `[${index}]`,
           ...passOnProps,
+          onDataChange: (changedValue) => onDataChange(pathTrace + `[${index}]`,changedValue),
         };
       });
     }
@@ -74,7 +78,7 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
             pathTrace,
             pass: 1,
             ...passOnProps,
-
+            onDataChange: (changedValue) => onDataChange(pathTrace,changedValue)
           }
         );
       }
@@ -83,13 +87,24 @@ export const GlobalRender = ({ data, onDataChange = () => {} }) => {
           return walkPath_2(path[key], pathTrace + `.${key}`, {
             name: key,
             ..._.omit(path[key], "renderValue"),
-            pass: 2
+            pass: 2,
           });
         } else {
           if (_.isObject(path)) {
-            return componentByType(null, [], { name: key, ...path[key], pathTrace : pathTrace + `.${key}`, pass:3 });
+            return componentByType(null, [], {
+              name: key,
+              ...path[key],
+              pathTrace: pathTrace + `.${key}`,
+              pass: 3,
+              onDataChange: (changedValue) => onDataChange(pathTrace + `.${key}`,changedValue)
+            });
           } else {
-            return componentByType(null, [], { name: key, pathTrace: pathTrace + `.${key}`, pass:4 });
+            return componentByType(null, [], {
+              name: key,
+              pathTrace: pathTrace + `.${key}`,
+              pass: 4,
+              onDataChange: (changedValue) => onDataChange(pathTrace + `.${key}`,changedValue)
+            });
           }
         }
       });

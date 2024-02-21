@@ -15,6 +15,7 @@ const Conversations = ({ children: comments, ...props }) => {
   };
   const handleSubmit = (e) => {
     comments = [...comments, { content: commentText, author: "User" }];
+    props?.onDataChange(comments)
     setCommentText("");
   };
 

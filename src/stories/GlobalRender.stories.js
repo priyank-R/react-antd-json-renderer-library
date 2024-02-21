@@ -20,3 +20,12 @@ stories.add("Render simple JSON", () => {
     </div>
   );
 });
+stories.add("Listen to data change", () => {
+  const onDataChange = (pathTrace, value) => {
+    console.log("onDataChange invoked !");
+    console.log(pathTrace);
+    console.log(value);
+  };
+
+  return <GlobalRender data={test2Json} onDataChange={onDataChange} />;
+});
