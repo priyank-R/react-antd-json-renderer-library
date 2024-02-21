@@ -3,7 +3,6 @@ import * as _ from "lodash";
 import React from 'react'
 
  const SectionTabs = ({ children }) => {
-  console.log(children);
   const handleChange = (change) => {
     console.log(change);
   };

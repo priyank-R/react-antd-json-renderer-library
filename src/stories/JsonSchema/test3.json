@@ -1,19 +1,15 @@
 {
-  "name": "Proc 3",
+  "_id": "123484303fe6b",
+  "name": "Procurment 1",
+  "_v": 1,
   "renderType": "stages",
   "renderValue": {
-    "My Stage 1": {
-      "name": "custom stage name",
-      "renderType": "stages",
+    "test_stage": {
+      "status": "COMPLETED",
+      "renderType": "tabs",
       "renderValue": {
-        "Sub stage 1": {
-          "renderType": "text"
-        }
+        "Custom Tab 1": {}
       }
-    },
-    "My Stage 2": {
-      "renderType": "text",
-      "renderValue": "hi"
     }
   }
 }

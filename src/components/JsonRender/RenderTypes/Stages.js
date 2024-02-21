@@ -1,12 +1,11 @@
 import { Collapse } from "antd";
 import * as _ from "lodash";
 import { yellow, green, red } from "@ant-design/colors";
-import React from 'react'
+import React from "react";
 
 const { Panel } = Collapse;
 
 const getStatusColor = (status) => {
-  console.log(status)
   if (!status) {
     return undefined;
   }
@@ -24,22 +23,29 @@ const getStatusColor = (status) => {
 const Stages = ({ children, ...props }) => {
   return (
     <Collapse>
-      {children.map((child, index) => {
-        let name_or_key = _.get(
-          child,
-          "props.name",
-          _.get(child, "name", `Panel ${index + 1}`)
-        );
-        return (
-          <Panel
-            header={name_or_key}
-            key={name_or_key}
-            style={{ backgroundColor: getStatusColor(child?.status) }}
-          >
-            {_.get(child, "props", null) !== null ? child : null}
-          </Panel>
-        );
-      })}
+      {_.isArray(children) ? (
+        children.map((child, index) => {
+          let [name_or_key, status] = [
+            _.get(
+              child,
+              "props.name",
+              _.get(child, "name", `Panel ${index + 1}`)
+            ),
+            _.get(child, "props.status", _.get(child, "status", null)),
+          ];
+          return (
+            <Panel
+              header={name_or_key}
+              key={name_or_key}
+              style={{ backgroundColor: getStatusColor(status) }}
+            >
+              {_.get(child, "props", null) !== null ? child : null}
+            </Panel>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </Collapse>
   );
 };
