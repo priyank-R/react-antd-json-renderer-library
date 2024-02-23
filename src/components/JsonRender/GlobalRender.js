@@ -5,6 +5,7 @@ import SectionTabs from "./RenderTypes/SectionTabs";
 import React from "react";
 import List from "./RenderTypes/List";
 import _Empty from "./RenderTypes/Empty";
+import _Custom from "./RenderTypes/Custom";
 
 export const GlobalRender = ({
   data,
@@ -64,23 +65,40 @@ export const GlobalRender = ({
           ...item,
           pathTrace: pathTrace + `[${index}]`,
           ...passOnProps,
-          onDataChange: (changedValue) => onDataChange(pathTrace + `[${index}]`,changedValue),
+          onDataChange: (changedValue) =>
+            onDataChange(pathTrace + `[${index}]`, changedValue),
         };
       });
     }
     if (_.isObject(path) && _.keys(path).length > 0) {
       if (_.has(path, "renderType", false)) {
-        return componentByType(
-          _.get(path, "renderType", null),
-          walkPath_2(path["renderValue"], pathTrace + ".renderValue"),
-          {
-            ..._.omit(path, "renderValue"),
-            pathTrace,
-            pass: 1,
-            ...passOnProps,
-            onDataChange: (changedValue) => onDataChange(pathTrace,changedValue)
-          }
-        );
+        if (_.get(path, "renderType", false) == "custom") {
+          return componentByType(
+            _.get(path, "renderType", null),
+            _.get(path, "renderValue"),
+            {
+              ..._.omit(path, "renderValue"),
+              pathTrace,
+              pass: 1,
+              ...passOnProps,
+              onDataChange: (changedValue) =>
+                onDataChange(pathTrace, changedValue),
+            }
+          );
+        } else {
+          return componentByType(
+            _.get(path, "renderType", null),
+            walkPath_2(path["renderValue"], pathTrace + ".renderValue"),
+            {
+              ..._.omit(path, "renderValue"),
+              pathTrace,
+              pass: 1,
+              ...passOnProps,
+              onDataChange: (changedValue) =>
+                onDataChange(pathTrace, changedValue),
+            }
+          );
+        }
       }
       return _.keys(path).map((key) => {
         if (_.has(path[key], "renderType")) {
@@ -96,14 +114,16 @@ export const GlobalRender = ({
               ...path[key],
               pathTrace: pathTrace + `.${key}`,
               pass: 3,
-              onDataChange: (changedValue) => onDataChange(pathTrace + `.${key}`,changedValue)
+              onDataChange: (changedValue) =>
+                onDataChange(pathTrace + `.${key}`, changedValue),
             });
           } else {
             return componentByType(null, [], {
               name: key,
               pathTrace: pathTrace + `.${key}`,
               pass: 4,
-              onDataChange: (changedValue) => onDataChange(pathTrace + `.${key}`,changedValue)
+              onDataChange: (changedValue) =>
+                onDataChange(pathTrace + `.${key}`, changedValue),
             });
           }
         }
@@ -125,6 +145,8 @@ export const GlobalRender = ({
         return <Conversations {...props}>{children}</Conversations>;
       case "files":
         return <List {...props}>{children}</List>;
+      case "custom":
+        return <_Custom {...props}>{children}</_Custom>;
       default:
         return <_Empty {...props}>{children}</_Empty>;
     }
