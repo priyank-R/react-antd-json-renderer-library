@@ -4,6 +4,7 @@ import { List } from "antd";
 import { GlobalRender } from "../components/JsonRender";
 import test2Json from "./JsonSchema/test2.json";
 import test1Json from "./JsonSchema/test3.json";
+import CustomComponentWithProps from "./components/CustomComponentWithProps";
 
 const stories = storiesOf("Global Renderer", module);
 
@@ -49,5 +50,21 @@ stories.add("Custom component", () => {
         },
       }}
     />
+  );
+});
+stories.add("Custom component with Props", () => {
+  return (
+    <GlobalRender
+    data={{
+      renderType: "stages",
+      renderValue: {
+        "Stage 1": {
+          renderType: "custom",
+          renderValue: React.createElement(CustomComponentWithProps),
+          formData: {a:1}
+        },
+      },
+    }}
+  />
   );
 });
