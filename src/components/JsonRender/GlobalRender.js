@@ -11,7 +11,6 @@ export const GlobalRender = ({
   data,
   onDataChange = (pathTrace, changedValue) => {},
 }) => {
-  const [renderedData, setRenderedData] = React.useState(data);
   const walkPath = (path, additional_props = {}, pathTrace = "$") => {
     if (!path || _.isString(path)) {
       return null;
@@ -152,5 +151,5 @@ export const GlobalRender = ({
     }
   };
 
-  return walkPath_2(renderedData);
+  return walkPath_2(data);
 };

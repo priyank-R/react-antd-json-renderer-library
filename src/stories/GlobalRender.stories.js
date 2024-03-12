@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { List } from "antd";
 import { GlobalRender } from "../components/JsonRender";
@@ -55,16 +55,42 @@ stories.add("Custom component", () => {
 stories.add("Custom component with Props", () => {
   return (
     <GlobalRender
-    data={{
-      renderType: "stages",
-      renderValue: {
-        "Stage 1": {
-          renderType: "custom",
-          renderValue: React.createElement(CustomComponentWithProps),
-          formData: {a:1}
+      data={{
+        renderType: "stages",
+        renderValue: {
+          "Stage 1": {
+            renderType: "custom",
+            renderValue: React.createElement(CustomComponentWithProps),
+            formData: { a: 1 },
+          },
         },
-      },
-    }}
-  />
+      }}
+    />
+  );
+});
+stories.add("Re-render when the props change", () => {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    setTimeout(() => {
+      setData({
+        renderType: "stages",
+        renderValue: {
+          "Stage 1": {
+            renderType: "custom",
+            renderValue: React.createElement(CustomComponentWithProps),
+            formData: { a: 1 },
+          },
+        },
+      });
+    }, 5000);
+  }, []);
+  return (
+    <>
+      <GlobalRender data={data} />;
+      <div>
+        <p>State currently is: </p>
+        <p>{JSON.stringify(data)}</p>
+      </div>
+    </>
   );
 });
