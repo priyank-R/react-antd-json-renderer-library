@@ -94,3 +94,10 @@ stories.add("Re-render when the props change", () => {
     </>
   );
 });
+stories.add("Custom Sort Order", () => {
+  return (
+    <div>
+      <GlobalRender sortOrder={['Demand Management / Procurement', 'Deployment', 'Decommission / Disposal']} data={test2Json} />
+    </div>
+  );
+});

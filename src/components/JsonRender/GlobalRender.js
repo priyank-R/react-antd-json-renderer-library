@@ -6,10 +6,12 @@ import React from "react";
 import List from "./RenderTypes/List";
 import _Empty from "./RenderTypes/Empty";
 import _Custom from "./RenderTypes/Custom";
+import { customSort } from "../../helpers";
 
 export const GlobalRender = ({
   data,
   onDataChange = (pathTrace, changedValue) => {},
+  sortOrder = [],
 }) => {
   const walkPath = (path, additional_props = {}, pathTrace = "$") => {
     if (!path || _.isString(path)) {
@@ -99,7 +101,7 @@ export const GlobalRender = ({
           );
         }
       }
-      return _.keys(path).map((key) => {
+      return customSort(_.keys(path), sortOrder).map((key) => {
         if (_.has(path[key], "renderType")) {
           return walkPath_2(path[key], pathTrace + `.${key}`, {
             name: key,
