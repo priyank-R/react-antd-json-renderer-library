@@ -1,0 +1,70 @@
+{
+    "_id": "123484303fe6b",
+    "name": "Procurment 1",
+    "_v": 1,
+    "renderType": "stages",
+    "renderValue": {
+      "Demand Management / Procurement": {
+        "status": "IN-PROGRESS",
+        "renderType": "stages",
+        "expanded": true,
+        "renderValue": {
+          "Demand Intake": {
+            "status": "IN-PROGRESS",
+            "renderType": "tabs",
+            "renderValue": {
+              "Demand Intake Form": {
+                "renderType": "stages",
+                "renderValue": {
+                  "Form 1": {
+                    "renderType": "text"
+                  }
+                }
+              },
+              "Conversations": {
+                "renderType": "conversations",
+                "renderValue": [
+                  {
+                    "id": "1234533",
+                    "user": "ruparelp",
+                    "content": "hello there"
+                  }
+                ]
+              },
+              "Uploads": {
+                "renderType": "files",
+                "renderValue": [
+                  {
+                    "id": "4563211",
+                    "name": "My File",
+                    "link": "sharepoint/url/merck.com"
+                  },
+                  {
+                    "id": "949494",
+                    "link": "sharepoint/url/merck.com"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Pre-Deployment Preparation": {
+        "renderType": "stages",
+        "renderValue": {}
+      },
+      "Deployment": {
+        "renderType": "stages",
+        "renderValue": {}
+      },
+      "Post Deployment": {
+        "renderType": "stages",
+        "renderValue": {}
+      },
+      "Decommission / Disposal": {
+        "renderType": "stages",
+        "renderValue": {}
+      }
+    }
+  }
+  

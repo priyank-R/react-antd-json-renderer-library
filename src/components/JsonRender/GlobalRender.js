@@ -13,52 +13,7 @@ export const GlobalRender = ({
   onDataChange = (pathTrace, changedValue) => {},
   sortOrder = [],
 }) => {
-  const walkPath = (path, additional_props = {}, pathTrace = "$") => {
-    if (!path || _.isString(path)) {
-      return null;
-    }
-    if (_.isArray(path)) {
-      return path.map((item, index) => {
-        return { ...item, pathTrace: pathTrace + `[${index}]` };
-      });
-    }
-
-    if (_.get(path, "renderType", false)) {
-      return {
-        ...componentByType(
-          _.get(path, "renderType"),
-          walkPath(
-            _.get(path, "renderValue", null),
-            {},
-            pathTrace + ".renderValue"
-          )
-        ),
-        ...{ ...additional_props, pathTrace: pathTrace, onDataChange },
-      };
-    }
-    let _props = {};
-    if (Object.keys(path).length == 0 || !path) {
-      return componentByType(null, { pathTrace });
-    }
-    return Object.keys(path).map((key) => {
-      if (_.get(path[key], "renderType", false)) {
-        _props = _.omit(path[key], "renderValue");
-
-        return walkPath(
-          path[key],
-          { key, name: key, ..._props },
-          pathTrace + `.${key}`
-        );
-      } else {
-        return walkPath(
-          null,
-          { key, name: key, ..._props },
-          pathTrace + `.${key}`
-        );
-      }
-    });
-  };
-
+ 
   const walkPath_2 = (path, pathTrace = "$", passOnProps = {}) => {
     if (_.isArray(path)) {
       return path.map((item, index) => {
@@ -80,7 +35,6 @@ export const GlobalRender = ({
             {
               ..._.omit(path, "renderValue"),
               pathTrace,
-              pass: 1,
               ...passOnProps,
               onDataChange: (changedValue) =>
                 onDataChange(pathTrace, changedValue),
@@ -93,7 +47,6 @@ export const GlobalRender = ({
             {
               ..._.omit(path, "renderValue"),
               pathTrace,
-              pass: 1,
               ...passOnProps,
               onDataChange: (changedValue) =>
                 onDataChange(pathTrace, changedValue),
@@ -106,7 +59,6 @@ export const GlobalRender = ({
           return walkPath_2(path[key], pathTrace + `.${key}`, {
             name: key,
             ..._.omit(path[key], "renderValue"),
-            pass: 2,
           });
         } else {
           if (_.isObject(path)) {
@@ -114,7 +66,6 @@ export const GlobalRender = ({
               name: key,
               ...path[key],
               pathTrace: pathTrace + `.${key}`,
-              pass: 3,
               onDataChange: (changedValue) =>
                 onDataChange(pathTrace + `.${key}`, changedValue),
             });
@@ -122,7 +73,6 @@ export const GlobalRender = ({
             return componentByType(null, [], {
               name: key,
               pathTrace: pathTrace + `.${key}`,
-              pass: 4,
               onDataChange: (changedValue) =>
                 onDataChange(pathTrace + `.${key}`, changedValue),
             });
