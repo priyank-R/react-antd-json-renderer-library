@@ -5,6 +5,7 @@ import { GlobalRender } from "../components/JsonRender";
 import test2Json from "./JsonSchema/test2.json";
 import test1Json from "./JsonSchema/test3.json";
 import expansion_test from "./JsonSchema/expansion_test.json";
+import ref_test from "./JsonSchema/ref_test.json";
 
 import CustomComponentWithProps from "./components/CustomComponentWithProps";
 
@@ -114,6 +115,13 @@ stories.add("Expanded property for stages", () => {
   return (
     <div>
       <GlobalRender data={expansion_test} />
+    </div>
+  );
+});
+stories.add("Ref property in the json", () => {
+  return (
+    <div>
+      <GlobalRender data={ref_test} />
     </div>
   );
 });

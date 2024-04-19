@@ -13,7 +13,6 @@ export const GlobalRender = ({
   onDataChange = (pathTrace, changedValue) => {},
   sortOrder = [],
 }) => {
- 
   const walkPath_2 = (path, pathTrace = "$", passOnProps = {}) => {
     if (_.isArray(path)) {
       return path.map((item, index) => {
@@ -40,6 +39,36 @@ export const GlobalRender = ({
                 onDataChange(pathTrace, changedValue),
             }
           );
+        } else if (_.get(path, "renderType", false) == "ref") {
+          let ref_split = _.get(path, "renderValue", "").split("$.");
+          let renderValue = null;
+          if (ref_split.length == 2) {
+            renderValue = _.get(data, ref_split[1], null);
+            if (renderValue == null) {
+              throw new Error(
+                "Path not found: " + _.get(path, "renderValue", "")
+              );
+            }
+            return componentByType(
+              _.get(renderValue, "renderType", null),
+              walkPath_2(
+                _.get(renderValue, "renderValue", {}),
+                pathTrace + ".renderValue"
+              ),
+              {
+                pathTrace,
+                ...passOnProps,
+                ..._.omit(renderValue, "renderValue"),
+
+                onDataChange: (changedValue) =>
+                  onDataChange(pathTrace, changedValue),
+              }
+            );
+          } else {
+            throw new Error(
+              "Provided ref not in valid format. Eg value: '$.path.to.object'"
+            );
+          }
         } else {
           return componentByType(
             _.get(path, "renderType", null),
@@ -103,5 +132,6 @@ export const GlobalRender = ({
     }
   };
 
+  console.log(walkPath_2(data));
   return walkPath_2(data);
 };
