@@ -132,6 +132,5 @@ export const GlobalRender = ({
     }
   };
 
-  console.log(walkPath_2(data));
   return walkPath_2(data);
 };

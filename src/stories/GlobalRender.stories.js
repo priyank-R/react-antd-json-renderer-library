@@ -9,7 +9,7 @@ import ref_test from "./JsonSchema/ref_test.json";
 
 import CustomComponentWithProps from "./components/CustomComponentWithProps";
 
-const stories = storiesOf("Global Renderer", module);
+const stories = storiesOf("02 - Global Renderer", module);
 
 stories.add("Render complex JSON", () => {
   return (
