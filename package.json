@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "set NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "set NODE_OPTIONS=--openssl-legacy-provider && build-storybook",
     "build-lib": "rollup -c"
   },
   "author": "Priyank Rupareliya",
