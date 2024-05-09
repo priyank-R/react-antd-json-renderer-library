@@ -133,7 +133,7 @@ export const GlobalRender = ({
       case "tabs":
         return <SectionTabs {...props}>{children}</SectionTabs>;
       case "text":
-        return <p>This is a text</p>;
+        return <p>{'Some text'}</p>;
       case "conversations":
         return <Conversations {...props}>{children}</Conversations>;
       case "files":

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GlobalRender } from "./JsonRender/GlobalRender";
 import _ from "lodash";
+import { Button, Divider } from "antd";
 
 const Playground = ({ initial_json = "" }) => {
   const [json, setJson] = useState(
@@ -41,8 +42,10 @@ const Playground = ({ initial_json = "" }) => {
         />
         {!isValidJson && <div style={{ color: "red" }}>Invalid JSON</div>}
 
-        <button onClick={formatJson}>Format JSON</button>
+        <Button onClick={formatJson} type='default'>Format JSON</Button>
       </div>
+      &nbsp;
+      <Divider>Preview of the above JSON:</Divider>
       <div>{<GlobalRender key={json} data={parsedJson} />}</div>
     </div>
   );
