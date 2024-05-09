@@ -18,10 +18,12 @@ export const GlobalRender = ({
       return path.map((item, index) => {
         return {
           ...item,
-          pathTrace: pathTrace + `[${index}]`,
           ...passOnProps,
-          onDataChange: (changedValue) =>
-            onDataChange(pathTrace + `[${index}]`, changedValue),
+          _json_renderer: {
+            pathTrace: pathTrace + `[${index}]`,
+            onDataChange: (changedValue) =>
+              onDataChange(pathTrace + `[${index}]`, changedValue),
+          },
         };
       });
     }
@@ -33,10 +35,12 @@ export const GlobalRender = ({
             _.get(path, "renderValue"),
             {
               ..._.omit(path, "renderValue"),
-              pathTrace,
               ...passOnProps,
-              onDataChange: (changedValue) =>
-                onDataChange(pathTrace, changedValue),
+              _json_renderer: {
+                pathTrace,
+                onDataChange: (changedValue) =>
+                  onDataChange(pathTrace, changedValue),
+              },
             }
           );
         } else if (_.get(path, "renderType", false) == "ref") {
@@ -56,12 +60,13 @@ export const GlobalRender = ({
                 pathTrace + ".renderValue"
               ),
               {
-                pathTrace,
-                ...passOnProps,
                 ..._.omit(renderValue, "renderValue"),
-
-                onDataChange: (changedValue) =>
-                  onDataChange(pathTrace, changedValue),
+                ...passOnProps,
+                _json_renderer: {
+                  pathTrace,
+                  onDataChange: (changedValue) =>
+                    onDataChange(pathTrace, changedValue),
+                },
               }
             );
           } else {
@@ -75,10 +80,12 @@ export const GlobalRender = ({
             walkPath_2(path["renderValue"], pathTrace + ".renderValue"),
             {
               ..._.omit(path, "renderValue"),
-              pathTrace,
               ...passOnProps,
-              onDataChange: (changedValue) =>
-                onDataChange(pathTrace, changedValue),
+              _json_renderer: {
+                pathTrace,
+                onDataChange: (changedValue) =>
+                  onDataChange(pathTrace, changedValue),
+              },
             }
           );
         }
@@ -94,16 +101,20 @@ export const GlobalRender = ({
             return componentByType(null, [], {
               name: key,
               ...path[key],
-              pathTrace: pathTrace + `.${key}`,
-              onDataChange: (changedValue) =>
-                onDataChange(pathTrace + `.${key}`, changedValue),
+              _json_renderer: {
+                pathTrace: pathTrace + `.${key}`,
+                onDataChange: (changedValue) =>
+                  onDataChange(pathTrace + `.${key}`, changedValue),
+              },
             });
           } else {
             return componentByType(null, [], {
               name: key,
-              pathTrace: pathTrace + `.${key}`,
-              onDataChange: (changedValue) =>
-                onDataChange(pathTrace + `.${key}`, changedValue),
+              _json_renderer: {
+                pathTrace: pathTrace + `.${key}`,
+                onDataChange: (changedValue) =>
+                  onDataChange(pathTrace + `.${key}`, changedValue),
+              },
             });
           }
         }

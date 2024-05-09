@@ -125,3 +125,51 @@ stories.add("Ref property in the json", () => {
     </div>
   );
 });
+
+stories.add(
+  "Custom component in JSON that receives props from the GlobalRenderer",
+  () => {
+    const CustomComponent = ({ children, ...rest_of_the_props }) => {
+      return (
+        <>
+          <p>
+            These props are injected by json renderer inside the parent object
+            of the custom component
+          </p>
+          <ul>
+            {Object.keys(rest_of_the_props).map((key) => {
+              return (
+                <li>
+                  Key: {key}, Val:{" "}
+                  {_.isString(rest_of_the_props[key]) ||
+                  _.isNumber(rest_of_the_props[key])
+                    ? rest_of_the_props[key]
+                    : typeof rest_of_the_props[key]}
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      );
+    };
+    return (
+      <GlobalRender
+        data={{
+          _id: "123484303fe6b",
+          name: "Procurment 1",
+          _v: 1,
+          renderType: "stages",
+          renderValue: {
+            "Custom props are here": {
+              prop_1: 1,
+              prop_2: 2,
+              renderType: "custom",
+              renderValue: React.createElement(CustomComponent),
+            },
+          },
+        }}
+      />
+    );
+  },
+  {}
+);
