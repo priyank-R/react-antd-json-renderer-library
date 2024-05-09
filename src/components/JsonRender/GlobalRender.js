@@ -55,10 +55,12 @@ export const GlobalRender = ({
             }
             return componentByType(
               _.get(renderValue, "renderType", null),
-              walkPath_2(
-                _.get(renderValue, "renderValue", {}),
-                pathTrace + ".renderValue"
-              ),
+              _.get(renderValue, "renderType", null) == "custom"
+                ? _.get(renderValue, "renderValue", {})
+                : walkPath_2(
+                    _.get(renderValue, "renderValue", {}),
+                    pathTrace + ".renderValue"
+                  ),
               {
                 ..._.omit(renderValue, "renderValue"),
                 ...passOnProps,

@@ -166,6 +166,17 @@ stories.add(
               renderType: "custom",
               renderValue: React.createElement(CustomComponent),
             },
+            "Custom component referenced somewhere else": {
+              abc: "abc",
+              pqr: "pqr",
+              renderType: "ref",
+              renderValue: "$.custom_component_parent",
+            },
+          },
+          custom_component_parent: {
+            wxy: "wxy",
+            renderType: "custom",
+            renderValue: React.createElement(CustomComponent),
           },
         }}
       />
