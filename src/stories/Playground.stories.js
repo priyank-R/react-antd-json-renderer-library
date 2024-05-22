@@ -22,6 +22,10 @@ stories.add("Stages", () => {
             stage_2: {
               name: "stage with custom name",
             },
+            stage_3: {
+              name: 'Stage with custom color', 
+              panel_color: 'yellow'
+            }
           },
         })}
       />

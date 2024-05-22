@@ -50,7 +50,7 @@ const Stages = ({ children, ...props }) => {
     let activeKeys = [];
     let map = _.isArray(children) ? (
       children.map((child, index) => {
-        let [name_or_key, status, expanded] = [
+        let [name_or_key, status, expanded, panel_color] = [
           _.get(
             child,
             "props.name",
@@ -58,6 +58,7 @@ const Stages = ({ children, ...props }) => {
           ),
           _.get(child, "props.status", _.get(child, "status", null)),
           _.get(child, "props.expanded", false),
+          _.get(child, "props.panel_color", undefined),
         ];
         if (expanded) {
           activeKeys.push(name_or_key);
@@ -66,7 +67,11 @@ const Stages = ({ children, ...props }) => {
           <Panel
             header={name_or_key}
             key={name_or_key}
-            style={{ backgroundColor: getStatusColor(status) }}
+            style={{
+              backgroundColor: panel_color
+                ? panel_color
+                : getStatusColor(status),
+            }}
           >
             {_.get(child, "props", null) !== null ? child : null}
           </Panel>
